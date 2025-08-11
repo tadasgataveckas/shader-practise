@@ -1,0 +1,21 @@
+#artifacts
+
+*.o
+*.a
+*.so
+*.out
+*.bin
+
+#ide files
+
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+#generated
+
+obj/
+
+
