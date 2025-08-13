@@ -15,10 +15,14 @@ void ofApp::setup(){
     ofIndexType indices[6] = { 0,1,2,2,3,0 };
     quad.addIndices(indices,6);
 
-    shader.load("uv_passthrough.vert", "uv_vis.frag");
+    shader.load("uv_passthrough.vert", "mix.frag");
 
     ofDisableArbTex();
+    ofDisableAlphaBlending();
     img.load("turtle.jpg");
+    img1.load("checkers.png");
+    img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
+    img1.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
 //--------------------------------------------------------------
@@ -30,6 +34,10 @@ void ofApp::update(){
 void ofApp::draw(){
     shader.begin();
     shader.setUniformTexture("turtleTex", img, 0);
+    shader.setUniformTexture("checkersTex", img1, 1);
+    shader.setUniform1f("time",ofGetElapsedTimef());
+    shader.setUniform1f("brightness", brightness);
+    shader.setUniform4f("addColor", addColor);
     quad.draw();
     shader.end();
 }

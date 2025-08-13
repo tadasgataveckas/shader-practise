@@ -26,5 +26,8 @@ class ofApp : public ofBaseApp{
 		ofMesh quad;
 		ofShader shader;
 		ofImage img;
+		ofImage img1;
+		float brightness = 0.5f;
+		ofVec4f addColor = ofVec4f(0.3f, 0.1f, 0.7f, 1.0f); 
 		
 };
