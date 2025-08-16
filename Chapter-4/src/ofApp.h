@@ -25,10 +25,15 @@ class ofApp : public ofBaseApp{
 
 		void buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos);
 
+		ofVec4f charTex;
+		ofVec4f bgTex;
 		ofShader charShader;
+		ofShader bgShader;
 		ofMesh charMesh;
 		ofMesh backgroundMesh;
+		ofMesh cloudMesh;
 		ofImage alienImage;
 		ofImage backgroundImage;
+		ofImage cloudImage;
 		
 };

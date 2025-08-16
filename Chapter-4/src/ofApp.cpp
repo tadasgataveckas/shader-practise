@@ -5,14 +5,21 @@
 void ofApp::setup(){
     using namespace glm;
     ofDisableArbTex();
+    //gpu creates depth buffer. Without this draw calls need to be ordered.
+    ofEnableDepthTest();
     
-    buildMesh(charMesh, 0.125,  0.25, ofVec3f(0.0, 0.15, 0.0));
+    ofEnableAlphaBlending();
+    
+    buildMesh(charMesh, 0.125f,  0.25f, ofVec3f(0.0f, -0.2f, 0.0f));
     //z coordinate points toward the screen, but normalized (uv)
     //coordinates are being passed, so the z argument is positive
-    buildMesh(backgroundMesh, 1, 1, ofVec3f(0.0f, 0.0f, 0.1f));
+    buildMesh(backgroundMesh, 1.0f, 1.0f, ofVec3f(0.0f, 0.0f, 0.1f));
+    buildMesh(cloudMesh, 0.25f, 0.125f, ofVec3f(-0.55f, 0.0f, 0.0f));
     charShader.load("passthrough.vert","alphatest.frag");
+    bgShader.load("passthrough.vert","alphablend.frag");
     alienImage.load("alien.png");
     backgroundImage.load("forest.png");
+    cloudImage.load("cloudfixed.png");
 }
 
 //--------------------------------------------------------------
@@ -23,11 +30,15 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     charShader.begin();
-    charShader.setUniformTexture("alienImage",backgroundImage, 0);
+    charShader.setUniformTexture("charTex", backgroundImage, 0);
     backgroundMesh.draw();
-    charShader.setUniformTexture("alienImage", alienImage, 0);
+    charShader.setUniformTexture("charTex", alienImage, 0);
     charMesh.draw();
     charShader.end();
+    bgShader.begin();
+    bgShader.setUniformTexture("bgTex", cloudImage, 0);
+    cloudMesh.draw();
+    bgShader.end();
 }
 
 //--------------------------------------------------------------
