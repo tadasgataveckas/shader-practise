@@ -6,5 +6,5 @@ out vec4 outColor;
 
 void main(){
     outColor = texture(bgTex, fragUV);
-    if(outColor.a > 0.8) outColor.a = 0.8;
+    outColor.a = min(outColor.a, 0.8);
 }

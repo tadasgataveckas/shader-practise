@@ -27,13 +27,18 @@ class ofApp : public ofBaseApp{
 
 		ofVec4f charTex;
 		ofVec4f bgTex;
+		
 		ofShader charShader;
 		ofShader bgShader;
+		ofShader spritesheetShader;
 		ofMesh charMesh;
 		ofMesh backgroundMesh;
 		ofMesh cloudMesh;
+		ofMesh sunMesh;
 		ofImage alienImage;
 		ofImage backgroundImage;
 		ofImage cloudImage;
+		ofImage sunImage;
+		ofImage spritesheetImage;
 		
 };
