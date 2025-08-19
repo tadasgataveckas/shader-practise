@@ -25,16 +25,21 @@ class ofApp : public ofBaseApp{
 
 		void buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos);
 
-		ofVec4f charTex;
-		ofVec4f bgTex;
+		bool walkRight;
+
+		glm::vec3 charPos;
+
+		glm::vec4 tex;
 		
-		ofShader charShader;
-		ofShader bgShader;
+		ofShader alphaTestShader;
+		ofShader alphaBlendShader;
 		ofShader spritesheetShader;
+
 		ofMesh charMesh;
 		ofMesh backgroundMesh;
 		ofMesh cloudMesh;
 		ofMesh sunMesh;
+		
 		ofImage alienImage;
 		ofImage backgroundImage;
 		ofImage cloudImage;
