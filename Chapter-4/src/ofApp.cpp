@@ -13,12 +13,13 @@ void ofApp::setup(){
     //coordinates are being passed, so the z argument is positive
     buildMesh(charMesh, 0.125f,  0.25f, ofVec3f(0.0f, -0.2f, 0.0f));
     buildMesh(backgroundMesh, 1.0f, 1.0f, ofVec3f(0.0f, 0.0f, 0.1f));
-    buildMesh(cloudMesh, 0.25f, 0.125f, ofVec3f(-0.55f, 0.0f, 0.0f));
+    buildMesh(cloudMesh, 0.25f, 0.125f, ofVec3f(0.0f, 0.0f, 0.0f));
     buildMesh(sunMesh, 1.0f, 1.0f, ofVec3f(0.0f, 0.0f, 0.05f));
 
     alphaTestShader.load("passthrough.vert","alphatest.frag");
     alphaBlendShader.load("passthrough.vert","alphablend.frag");
     spritesheetShader.load("spritesheet.vert","alphatest.frag");
+    transformShader.load("transform.vert", "alphablend.frag");
 
     alienImage.load("alien.png");
     backgroundImage.load("forest.png");
@@ -62,10 +63,15 @@ void ofApp::draw(){
 
     ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
     ofDisableDepthTest();
-    alphaBlendShader.begin();
-    alphaBlendShader.setUniformTexture("tex", cloudImage, 0);
+    transformShader.begin();
+    transformShader.setUniform3f("translate", translation);
+    transformShader.setUniform3f("scale", scale);
+    transformShader.setUniformTexture("tex", cloudImage, 0);
     cloudMesh.draw();
+    transformShader.end();
+
     ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
+    alphaTestShader.begin();
     alphaBlendShader.setUniformTexture("tex", sunImage, 0);
     sunMesh.draw();
     alphaBlendShader.end();

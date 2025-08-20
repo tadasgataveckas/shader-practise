@@ -28,11 +28,14 @@ class ofApp : public ofBaseApp{
 		bool walkRight;
 
 		glm::vec3 charPos;
+		glm::vec3 translation = glm::vec3(0.3f, 0.3f, 0.3f);
+		glm::vec3 scale = glm::vec3(1.2f, 1.5f, 0.2f);
 
 		glm::vec4 tex;
 		
 		ofShader alphaTestShader;
 		ofShader alphaBlendShader;
+		ofShader transformShader;
 		ofShader spritesheetShader;
 
 		ofMesh charMesh;
