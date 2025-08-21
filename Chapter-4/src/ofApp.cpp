@@ -64,17 +64,23 @@ void ofApp::draw(){
     ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
     ofDisableDepthTest();
     transformShader.begin();
-    transformShader.setUniform3f("translate", translation);
-    transformShader.setUniform3f("scale", scale);
     transformShader.setUniformTexture("tex", cloudImage, 0);
+    transformShader.setUniform3f("translate", glm::vec3(0.4f, 0.1f, 0.0f));
+    transformShader.setUniform3f("scale", glm::vec3(0.9f, 1.0f, 0.0f));
+    transformShader.setUniform1f("rotation", 0.0f);
+    cloudMesh.draw();
+
+    transformShader.setUniform3f("translate", glm::vec3(-0.9f, 0.3f, 0.0f));
+    transformShader.setUniform3f("scale", glm::vec3(1.5f, 1.0f, 1.2f));
+    transformShader.setUniform1f("rotation", 0.5f);
     cloudMesh.draw();
     transformShader.end();
 
-    ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
-    alphaTestShader.begin();
-    alphaBlendShader.setUniformTexture("tex", sunImage, 0);
-    sunMesh.draw();
-    alphaBlendShader.end();
+    // ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
+    // alphaTestShader.begin();
+    // alphaBlendShader.setUniformTexture("tex", sunImage, 0);
+    // sunMesh.draw();
+    // alphaBlendShader.end();
 }
 
 //--------------------------------------------------------------
