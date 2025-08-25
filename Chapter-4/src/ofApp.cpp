@@ -1,5 +1,16 @@
 #include "ofApp.h"
+using namespace glm;
+mat4 translation = translate(vec3(0.5f, 0.0f, 0.0f));
+mat4 rotation = rotate((float)PI * 0.5f, vec3(0.0f, 0.0f, 1.0f));
+mat4 scaler = scale(vec3(0.5f, 0.25f, 1.0f));
 
+glm::mat4 buildMatrix(glm::vec3 trans, float rot, glm::vec3 scale){
+    using glm::mat4;
+    mat4 translation = glm::translate(trans);
+    mat4 rotation = glm::rotate(rot, glm::vec3(0.0f, 0.0f, 1.0f));
+    mat4 scaler = glm::scale(scale);
+    return translation * rotation * scaler;
+}
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -19,7 +30,7 @@ void ofApp::setup(){
     alphaTestShader.load("passthrough.vert","alphatest.frag");
     alphaBlendShader.load("passthrough.vert","alphablend.frag");
     spritesheetShader.load("spritesheet.vert","alphatest.frag");
-    transformShader.load("transform.vert", "alphablend.frag");
+    transformShader.load("matrixtransform.vert", "alphablend.frag");
 
     alienImage.load("alien.png");
     backgroundImage.load("forest.png");
@@ -63,16 +74,22 @@ void ofApp::draw(){
 
     ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
     ofDisableDepthTest();
+    mat4 transformA = buildMatrix(vec3(-0.55f, 0.0f, 0.0f), 0.0f, vec3(1.5f,1.0f,1.0f));
+    mat4 transformB = buildMatrix(vec3(0.4f, 0.2f, 0.0f), 1.0f, vec3(1.0f, 1.0f, 1.0f));
     transformShader.begin();
     transformShader.setUniformTexture("tex", cloudImage, 0);
-    transformShader.setUniform3f("translate", glm::vec3(0.4f, 0.1f, 0.0f));
-    transformShader.setUniform3f("scale", glm::vec3(0.9f, 1.0f, 0.0f));
-    transformShader.setUniform1f("rotation", 0.0f);
+    // transformShader.setUniform3f("translate", glm::vec3(0.4f, 0.1f, 0.0f));
+    // transformShader.setUniform3f("scale", glm::vec3(0.9f, 1.0f, 0.0f));
+    // transformShader.setUniform1f("rotation", 0.0f);
+
+
+    transformShader.setUniformMatrix4f("transformmat", transformA);
     cloudMesh.draw();
 
-    transformShader.setUniform3f("translate", glm::vec3(-0.9f, 0.3f, 0.0f));
-    transformShader.setUniform3f("scale", glm::vec3(1.5f, 1.0f, 1.2f));
-    transformShader.setUniform1f("rotation", 0.5f);
+    // transformShader.setUniform3f("translate", glm::vec3(-0.9f, 0.3f, 0.0f));
+    // transformShader.setUniform3f("scale", glm::vec3(1.5f, 1.0f, 1.2f));
+    // transformShader.setUniform1f("rotation", 0.5f);
+    transformShader.setUniformMatrix4f("transformmat", transformB);
     cloudMesh.draw();
     transformShader.end();
 
